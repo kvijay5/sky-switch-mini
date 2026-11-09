@@ -1,6 +1,7 @@
 /* Sky Switch Mini - Single Plain CSS Stylesheet */
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --switch-scale: 1.45;
 }
 
 *,
@@ -22,6 +23,19 @@ body {
   background-color: #ffe9c7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Clean recording mode */
+body.clean-mode,
+body.clean-mode * {
+  cursor: none !important;
+}
+
+body.clean-mode .switch-button:focus-visible {
+  outline: none !important;
+  box-shadow: 
+    0 20px 45px -10px rgba(0, 0, 0, 0.35),
+    0 8px 18px -4px rgba(0, 0, 0, 0.2) !important;
 }
 
 #root {
@@ -75,7 +89,25 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 26px;
+  gap: 36px;
+}
+
+/* Switch Hero Scaling Wrapper (scales 360px switch to 45-55% of 1080x1080 frame) */
+.switch-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(var(--switch-scale));
+  transform-origin: center center;
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustment for small mobile screens */
+@media (max-width: 560px) {
+  :root {
+    --switch-scale: 0.88;
+  }
 }
 
 /* Switch Button Wrapper */
@@ -154,17 +186,55 @@ body {
 .star {
   position: absolute;
   transform-origin: center;
-  animation: starTwinkle ease-in-out infinite alternate;
 }
 
-@keyframes starTwinkle {
-  0% {
+/* Star Twinkle Variants with 1.5s period (exactly divides 3.0s loop) */
+.star-twinkle-a {
+  animation: starTwinkleA 1.5s ease-in-out infinite;
+}
+
+.star-twinkle-b {
+  animation: starTwinkleB 1.5s ease-in-out infinite;
+}
+
+.star-twinkle-c {
+  animation: starTwinkleC 1.5s ease-in-out infinite;
+}
+
+@keyframes starTwinkleA {
+  0%, 100% {
     opacity: 0.3;
     transform: scale(0.7);
   }
-  100% {
+  50% {
     opacity: 1;
     transform: scale(1.15);
+  }
+}
+
+@keyframes starTwinkleB {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  75% {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+}
+
+@keyframes starTwinkleC {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.18);
   }
 }
 
@@ -193,80 +263,81 @@ body {
   pointer-events: none;
 }
 
+/* 30% Brighter Glowing Fireflies with 3.0s period (divides 3.0s loop) */
 .firefly-cyan {
-  width: 6px;
-  height: 6px;
-  background: #a5f3fc;
+  width: 7px;
+  height: 7px;
+  background: #cffafe;
   box-shadow: 
-    0 0 8px #22d3ee,
-    0 0 16px #06b6d4,
-    0 0 24px rgba(6, 182, 212, 0.7);
-  animation: fireflyFloat1 3.5s ease-in-out infinite alternate;
+    0 0 10px #22d3ee,
+    0 0 20px #06b6d4,
+    0 0 32px rgba(6, 182, 212, 0.95);
+  animation: fireflyFloat1 3.0s ease-in-out infinite;
 }
 
 .firefly-magenta {
-  width: 6px;
-  height: 6px;
-  background: #fbcfe8;
+  width: 7px;
+  height: 7px;
+  background: #fdf2f8;
   box-shadow: 
-    0 0 8px #f472b6,
-    0 0 16px #ec4899,
-    0 0 24px rgba(236, 72, 153, 0.7);
-  animation: fireflyFloat2 4.1s ease-in-out infinite alternate;
+    0 0 10px #f472b6,
+    0 0 20px #ec4899,
+    0 0 32px rgba(236, 72, 153, 0.95);
+  animation: fireflyFloat2 3.0s ease-in-out infinite;
 }
 
 .firefly-yellow {
-  width: 6px;
-  height: 6px;
-  background: #fef08a;
+  width: 7px;
+  height: 7px;
+  background: #fef9c3;
   box-shadow: 
-    0 0 8px #facc15,
-    0 0 16px #eab308,
-    0 0 24px rgba(234, 179, 8, 0.7);
-  animation: fireflyFloat3 3.8s ease-in-out infinite alternate;
+    0 0 10px #facc15,
+    0 0 20px #eab308,
+    0 0 32px rgba(234, 179, 8, 0.95);
+  animation: fireflyFloat3 3.0s ease-in-out infinite;
 }
 
 @keyframes fireflyFloat1 {
-  0% {
-    transform: translate(0, 0) scale(0.85);
-    opacity: 0.75;
+  0%, 100% {
+    transform: translate(0, 0) scale(0.9);
+    opacity: 0.85;
   }
-  50% {
-    transform: translate(7px, -9px) scale(1.15);
+  35% {
+    transform: translate(7px, -9px) scale(1.2);
     opacity: 1;
   }
-  100% {
-    transform: translate(-5px, -16px) scale(0.9);
-    opacity: 0.8;
+  70% {
+    transform: translate(-5px, -15px) scale(0.95);
+    opacity: 0.9;
   }
 }
 
 @keyframes fireflyFloat2 {
-  0% {
-    transform: translate(0, 0) scale(0.9);
-    opacity: 0.8;
+  0%, 100% {
+    transform: translate(0, 0) scale(0.95);
+    opacity: 0.85;
   }
-  50% {
-    transform: translate(-9px, 7px) scale(1.2);
+  40% {
+    transform: translate(-9px, 7px) scale(1.25);
     opacity: 1;
   }
-  100% {
-    transform: translate(5px, 13px) scale(0.85);
-    opacity: 0.75;
+  75% {
+    transform: translate(5px, 12px) scale(0.9);
+    opacity: 0.8;
   }
 }
 
 @keyframes fireflyFloat3 {
-  0% {
+  0%, 100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.85;
+    opacity: 0.9;
   }
-  50% {
-    transform: translate(8px, 6px) scale(0.85);
-    opacity: 0.7;
+  45% {
+    transform: translate(8px, 6px) scale(0.9);
+    opacity: 0.75;
   }
-  100% {
-    transform: translate(-6px, -8px) scale(1.15);
+  80% {
+    transform: translate(-7px, -8px) scale(1.2);
     opacity: 1;
   }
 }
@@ -312,19 +383,20 @@ body {
   background: radial-gradient(circle at 45% 45%, rgba(254, 240, 138, 0.45) 0%, rgba(253, 224, 71, 0.3) 50%, rgba(245, 158, 11, 0) 75%);
 }
 
+/* Sun Rays Rotation: exactly 3.0s (divides 3.0s loop seamlessly) */
 .sun-rays {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  animation: rotateSunRays 18s linear infinite;
+  animation: rotateSunRays 3.0s linear infinite;
 }
 
 @keyframes rotateSunRays {
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
 }
@@ -361,11 +433,14 @@ body {
   letter-spacing: 0.02em;
   font-weight: 500;
   text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 /* Prefers Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .star,
+  .star-twinkle-a,
+  .star-twinkle-b,
+  .star-twinkle-c,
   .sun-rays,
   .firefly-cyan,
   .firefly-magenta,
